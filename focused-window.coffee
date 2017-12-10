@@ -65,9 +65,12 @@
     <link rel="stylesheet" href="./font-awesome/font-awesome.min.css" />
 
     <div class="window">
-      <i class="fa fa-window-maximize"></i>
+      <i class="fa fa-television"></i>
       <span class="mode"></span>
-      <span class="window-output"></span>
+      <span class="window-output">
+        <i class="fa fa-window-maximize"></i>
+        <span class="window-output-text"></span>
+      </span>
     </div>
     """
 
@@ -83,7 +86,7 @@
 
     $( ".window" ).css({ color: wal.colors.color5 })
     $( ".window-output" ).css({ color: wal.special.foreground })
-    $( ".window-output" ).text( "#{ window }" )
+    $( ".window-output-text" ).text( "#{ window }" )
     $( ".mode" ).text( "[#{ mode }]")
 
   #
@@ -106,7 +109,8 @@
       white-space: nowrap
 
     .mode
-      padding: 0 5px
+      padding: 0 5px 1px
+
 
     width: 100%
     text-overflow: ellipsis

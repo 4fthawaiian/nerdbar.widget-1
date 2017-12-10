@@ -34,8 +34,6 @@
     left: 0px
     right: 0px
     height: 20px
-    background-color: #000
-    // background-color: #3B4252
     opacity: 0.725
     z-index: -1
   """
