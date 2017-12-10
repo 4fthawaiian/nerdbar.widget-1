@@ -56,13 +56,13 @@
     """
     <link rel="stylesheet" href="nerdbar.widget/font-awesome/font-awesome.min.css" />
 
-    <div class="volume">
-      <span class="volume-icon"></span>
-      <span class="volume-output"></span>
-    </div>
     <div class="wifi">
       <i class="fa fa-wifi"></i>
       <span class="wifi-output"></span>
+    </div>
+    <div class="volume">
+      <span class="volume-icon"></span>
+      <span class="volume-output"></span>
     </div>
     <div class="battery">
       <span class="battery-icon"></span>
@@ -92,7 +92,7 @@
     $( ".time-output" )    .text( "#{ time }" )
     $( ".time" ).css({ color: wal.colors.color15 })
     $( ".wifi-output" )    .text( "#{ wifi }" )
-    $( ".wifi-output" ).css({ color: wal.colors.color3 })
+    $( ".wifi" ).css({ color: wal.colors.color3 })
     $( ".volume-output" )  .text( "#{ volume }%" )
     $( ".volume" ).css({ color: wal.colors.color15 })
 
