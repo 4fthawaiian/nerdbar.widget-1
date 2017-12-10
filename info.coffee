@@ -36,6 +36,7 @@
   #
 
   command: "echo " +
+           "$(cat ~/.cache/wal/colors.json):::" +
            "$(#{ commands.battery }):::" +
            "$(#{ commands.time }):::" +
            "$(#{ commands.wifi }):::" +
@@ -45,7 +46,7 @@
   # ─── REFRESH ────────────────────────────────────────────────────────────────
   #
 
-  refreshFrequency: 1000
+  refreshFrequency: 100000
 
   #
   # ─── RENDER ─────────────────────────────────────────────────────────────────
@@ -53,7 +54,7 @@
 
   render: ( ) ->
     """
-    <link rel="stylesheet" href="./font-awesome/font-awesome.min.css" />
+    <link rel="stylesheet" href="nerdbar.widget/font-awesome/font-awesome.min.css" />
 
     <div class="volume">
       <span class="volume-icon"></span>
@@ -80,15 +81,20 @@
   update: ( output ) ->
     output = output.split( /:::/g )
 
-    battery = output[ 0 ]
-    time    = output[ 1 ]
-    wifi    = output[ 2 ]
-    volume  = output[ 3 ]
+    wal  = JSON.parse output[ 0 ]
+    battery = output[ 1 ]
+    time    = output[ 2 ]
+    wifi    = output[ 3 ]
+    volume  = output[ 4 ]
 
     $( ".battery-output" ) .text( "#{ battery }" )
+    $( ".battery" ).css({ color: wal.colors.color5 })
     $( ".time-output" )    .text( "#{ time }" )
+    $( ".time" ).css({ color: wal.colors.color15 })
     $( ".wifi-output" )    .text( "#{ wifi }" )
+    $( ".wifi-output" ).css({ color: wal.colors.color3 })
     $( ".volume-output" )  .text( "#{ volume }%" )
+    $( ".volume" ).css({ color: wal.colors.color15 })
 
     @handleBattery( Number( battery.replace( /%/g, "" ) ) )
     @handleVolume( Number( volume ) )
@@ -135,12 +141,13 @@
     div
       margin-right: 15px
 
-    top: 15px
-    right: 150px
-    font-family: 'Fira Mono'
+    bottom: 2px
+    right: 0px
+    font-family: 'SF Compact Text'
     font-size: 13px
     font-smoothing: antialiasing
     z-index: 0
+    opacity: 1
   """
 
 # ──────────────────────────────────────────────────────────────────────────────

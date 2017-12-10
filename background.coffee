@@ -4,11 +4,19 @@
 # ──────────────────────────────────────────────────────────────────────
 #
 
+  command: "echo " +
+           "$(cat ~/.cache/wal/colors.json):::"
+
   #
   # ─── REFRESH ────────────────────────────────────────────────────────────────
   #
 
-  refreshFrequency: false
+  refreshFrequency: 10000
+
+  update: ( output ) ->
+    output = output.split( /:::/g )
+    wal = JSON.parse output[0]
+    $('#nerdbar-widget-background-coffee').css({ 'background-color': wal.special.background })
 
   #
   # ─── RENDER ─────────────────────────────────────────────────────────────────
@@ -22,13 +30,13 @@
   #
 
   style: """
-    top: 10px
-    left: 150px
-    right: 150px
-    height: 25px
-    // background-color: #000
-    background-color: #3B4252
-    opacity: 0.125
+    bottom: 0px
+    left: 0px
+    right: 0px
+    height: 20px
+    background-color: #000
+    // background-color: #3B4252
+    opacity: 0.725
     z-index: -1
   """
 

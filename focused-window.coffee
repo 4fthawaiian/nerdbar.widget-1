@@ -11,7 +11,8 @@
   commands =
     kwm:     "/usr/local/bin/kwmc query space active tag"
     chunkwm: "echo $(/usr/local/bin/chunkc tiling::query --window owner) - " +
-             "$(/usr/local/bin/chunkc tiling::query --window name)"
+             "$(/usr/local/bin/chunkc tiling::query --window name):::" +
+             "$(/usr/local/bin/chunkc tiling::query --desktop mode)"
     # focusedWindow: """
     #   osascript -e 'global frontApp, frontAppName, windowTitle
     #   set windowTitle to ""
@@ -46,6 +47,7 @@
   #
 
   command: "echo " +
+           "$(cat ~/.cache/wal/colors.json):::" +
            "$(#{ commands.chunkwm })"
 
   #
@@ -64,6 +66,7 @@
 
     <div class="window">
       <i class="fa fa-window-maximize"></i>
+      <span class="mode"></span>
       <span class="window-output"></span>
     </div>
     """
@@ -73,7 +76,15 @@
   #
 
   update: ( output ) ->
-    $( ".window-output" ).text( "#{ output }" )
+    output = output.split(':::')
+    wal = JSON.parse output[0]
+    window = output[1]
+    mode = output[2].trim()
+
+    $( ".window" ).css({ color: wal.colors.color5 })
+    $( ".window-output" ).css({ color: wal.special.foreground })
+    $( ".window-output" ).text( "#{ window }" )
+    $( ".mode" ).text( "[#{ mode }]")
 
   #
   # ─── STYLE ──────────────────────────────────────────────────────────────────
@@ -81,24 +92,33 @@
 
   style: """
     .window
-      left: 150px
-      color: #{ colors.black }
-      display: inline-block
+      color: #{ colors.white }
+      display: flex
+      align-items: center
+      justify-items: center
+
+    .window-output
+      padding-left: 0px
       max-width: calc(55% - 165px)
+      margin: auto
       text-overflow: ellipsis
       overflow: hidden
       white-space: nowrap
+
+    .mode
+      padding: 0 5px
 
     width: 100%
     text-overflow: ellipsis
     overflow: hidden
     white-space: nowrap
-    top: 15px
-    left: 165px
-    font-family: 'Iosevka'
+    bottom: 2px
+    left: 15px
+    font-family: 'SF Compact Text'
     font-size: 13px
     font-smoothing: antialiasing
     z-index: 0
+    opacity: 1
   """
 
 # ──────────────────────────────────────────────────────────────────────────────
