@@ -84,6 +84,11 @@
     window = output[1]
     mode = output[2].trim()
 
+    if window.match(/\? - \?/)
+      $(".window-output").hide()
+    else
+      $(".window-output").show()
+
     $( ".window" ).css({ color: wal.colors.color5 })
     $( ".window-output" ).css({ color: wal.special.foreground })
     $( ".window-output-text" ).text( "#{ window }" )
