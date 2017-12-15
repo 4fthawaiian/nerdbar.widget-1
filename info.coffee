@@ -16,6 +16,7 @@
              "Versions/Current/Resources/airport -I | " +
              "sed -e \"s/^ *SSID: //p\" -e d"
     volume : "osascript -e 'output volume of (get volume settings)'"
+    ext    : "curl -s http://whatismyip.akamai.com/"
     en0    : "ipconfig getifaddr en0"
     en1    : "ipconfig getifaddr en1"
   #
@@ -42,7 +43,7 @@
            "$(#{ commands.time }):::" +
            "$(#{ commands.wifi }):::" +
            "$(#{ commands.volume }):::" +
-           "$(#{ commands.en0 }) $(#{ commands.en1})"
+           "$(#{ commands.ext }) - $(#{ commands.en0 }) $(#{ commands.en1})"
 
   #
   # ─── REFRESH ────────────────────────────────────────────────────────────────
