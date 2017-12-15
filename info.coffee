@@ -16,7 +16,8 @@
              "Versions/Current/Resources/airport -I | " +
              "sed -e \"s/^ *SSID: //p\" -e d"
     volume : "osascript -e 'output volume of (get volume settings)'"
-
+    en0    : "ipconfig getifaddr en0"
+    en1    : "ipconfig getifaddr en1"
   #
   # ─── COLORS ─────────────────────────────────────────────────────────────────
   #
@@ -40,7 +41,8 @@
            "$(#{ commands.battery }):::" +
            "$(#{ commands.time }):::" +
            "$(#{ commands.wifi }):::" +
-           "$(#{ commands.volume }):::"
+           "$(#{ commands.volume }):::" +
+           "$(#{ commands.en0 }) $(#{ commands.en1})"
 
   #
   # ─── REFRESH ────────────────────────────────────────────────────────────────
@@ -56,6 +58,10 @@
     """
     <link rel="stylesheet" href="nerdbar.widget/font-awesome/font-awesome.min.css" />
 
+    <div class="ips">
+      <i class="fa fa-address-card-o"></i>
+      <spann class="ips-output"></span>
+    </div>
     <div class="wifi">
       <i class="fa fa-wifi"></i>
       <span class="wifi-output"></span>
@@ -86,6 +92,7 @@
     time    = output[ 2 ]
     wifi    = output[ 3 ]
     volume  = output[ 4 ]
+    ips     = output[ 5 ]
 
     $( ".battery-output" ) .text( "#{ battery }" )
     $( ".battery" ).css({ color: wal.colors.color5 })
@@ -95,6 +102,8 @@
     $( ".wifi" ).css({ color: wal.colors.color3 })
     $( ".volume-output" )  .text( "#{ volume }%" )
     $( ".volume" ).css({ color: wal.colors.color15 })
+    $( ".ips-output" ).text( "#{ ips }")
+    $( ".ips" ).css({ color: wal.colors.color3 })
 
     @handleBattery( Number( battery.replace( /%/g, "" ) ) )
     @handleVolume( Number( volume ) )
