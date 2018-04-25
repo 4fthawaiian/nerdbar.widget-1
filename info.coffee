@@ -16,7 +16,7 @@
              "Versions/Current/Resources/airport -I | " +
              "sed -e \"s/^ *SSID: //p\" -e d"
     volume : "osascript -e 'output volume of (get volume settings)'"
-    ext    : "curl -s http://whatismyip.akamai.com/"
+    ext    : "curl -s https://i.r4r3.me/ip"
     en0    : "ipconfig getifaddr en0"
     en1    : "ipconfig getifaddr en1"
   #
