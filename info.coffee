@@ -16,9 +16,11 @@
              "Versions/Current/Resources/airport -I | " +
              "sed -e \"s/^ *SSID: //p\" -e d"
     volume : "osascript -e 'output volume of (get volume settings)'"
-    ext    : "curl -s https://i.r4r3.me/ip"
+    song   : "grep StreamTitle foo |tail -1 |awk -F= '{print $NF}' |sed -e 's/^.//g' -e 's/..$//g'"
+    ext    : "curl -s canhazip.com"
     en0    : "ipconfig getifaddr en0"
     en1    : "ipconfig getifaddr en1"
+    weather: "curl -s 'wttr.in/sydney?format=3' |awk -F: '{print $NF}'"
   #
   # ─── COLORS ─────────────────────────────────────────────────────────────────
   #
@@ -43,7 +45,8 @@
            "$(#{ commands.time }):::" +
            "$(#{ commands.wifi }):::" +
            "$(#{ commands.volume }):::" +
-           "$(#{ commands.ext }) - $(#{ commands.en0 }) $(#{ commands.en1})"
+           "$(#{ commands.ext }) - $(#{ commands.en0 }) $(#{ commands.en1}):::" +
+           "$(#{ commands.weather })"
 
   #
   # ─── REFRESH ────────────────────────────────────────────────────────────────
@@ -75,6 +78,9 @@
       <span class="battery-icon"></span>
       <span class="battery-output"></span>
     </div>
+    <div class="mytemp">
+      <span class="mytemp-output"></span>
+    </div>
     <div class="time">
       <i class="fa fa-clock-o"></i>
       <span class="time-output"></span>
@@ -94,17 +100,20 @@
     wifi    = output[ 3 ]
     volume  = output[ 4 ]
     ips     = output[ 5 ]
+    mytemp  = output[ 6 ].trim()
 
-    $( ".battery-output" ) .text( "#{ battery }" )
+    $( ".mytemp-output" ) .text( "#{ mytemp }" )
+    $( ".mytemp" ).css({ color: wal.colors.color15 })
+    $( ".battery-output" ) .text( "🔋 #{ battery }" )
     $( ".battery" ).css({ color: wal.colors.color5 })
-    $( ".time-output" )    .text( "#{ time }" )
+    $( ".time-output" )    .text( "🕐 #{ time }" )
     $( ".time" ).css({ color: wal.colors.color15 })
-    $( ".wifi-output" )    .text( "#{ wifi }" )
+    $( ".wifi-output" )    .text( "📶 #{ wifi }" )
     $( ".wifi" ).css({ color: wal.colors.color3 })
-    $( ".volume-output" )  .text( "#{ volume }%" )
+    $( ".volume-output" )  .text( "🔈 #{ volume }%" )
     $( ".volume" ).css({ color: wal.colors.color15 })
-    $( ".ips-output" ).text( "#{ ips }")
-    $( ".ips" ).css({ color: wal.colors.color3 })
+    #$( ".ips-output" ).text( "#{ ips }")
+    #$( ".ips" ).css({ color: wal.colors.color3 })
 
     @handleBattery( Number( battery.replace( /%/g, "" ) ) )
     @handleVolume( Number( volume ) )

@@ -12,7 +12,8 @@
     kwm:     "/usr/local/bin/kwmc query space active tag"
     chunkwm: "echo $(/usr/local/bin/chunkc tiling::query --window owner) - " +
              "$(/usr/local/bin/chunkc tiling::query --window name):::" +
-             "$(/usr/local/bin/chunkc tiling::query --desktop mode)"
+             "$(/usr/local/bin/chunkc tiling::query --desktop mode):::" +
+             "$(/usr/local/bin/chunkc tiling::query --desktop id)"
     # focusedWindow: """
     #   osascript -e 'global frontApp, frontAppName, windowTitle
     #   set windowTitle to ""
@@ -82,7 +83,8 @@
     output = output.split(':::')
     wal = JSON.parse output[0]
     window = output[1]
-    mode = output[2].trim()
+    mode = output[2]
+    dtop = output[3].trim()
 
     if window.match(/\? - \?/)
       $(".window-output").hide()
@@ -92,7 +94,7 @@
     $( ".window" ).css({ color: wal.colors.color5 })
     $( ".window-output" ).css({ color: wal.special.foreground })
     $( ".window-output-text" ).text( "#{ window }" )
-    $( ".mode" ).text( "[#{ mode }]")
+    $( ".mode" ).text( "[#{ mode }] (desktop #{dtop})")
 
   #
   # ─── STYLE ──────────────────────────────────────────────────────────────────
