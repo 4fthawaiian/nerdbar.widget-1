@@ -30,5 +30,5 @@ Current time
 Clone this repository to your Übersicht widgets:
 
 ```bash
-git clone https://github.com/yoyostile/nerdbar.widget-1 $HOME/Library/Application\ Support/Übersicht/widgets
+git clone https://github.com/4fthawaiian/nerdbar.widget-1.git
 ```
